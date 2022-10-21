@@ -1,18 +1,20 @@
-# Base image
+# pull the Node.js Docker image
 FROM node:16
 
-# Create app directory
+# create the directory inside the container
 WORKDIR /usr/src/app
 
-# Install app dependencies
+# copy the package.json files from local machine to the workdir in container
 COPY package*.json ./
+
+# run npm install in our local machine
 RUN npm install
 
-# Copy files required for the app to run
+# copy the generated modules and all other files to the container
 COPY . .
 
-# Tell the port number the container should expose
+# our app is running on port 8080 within the container, so need to expose it
 EXPOSE 8080
 
-# Run the application
-CMD [ "npm", "start"]
+# the command that starts our app
+CMD ["node", "index.js"]
